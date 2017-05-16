@@ -48,6 +48,7 @@ $(function(){
 });
 
 function sendMessage(data){ //Sends inputs to the ChatScript server, and returns the response-  data - a JSON string of input information
+console.log("yes");
 $.ajax({
         url: 'ui.php',
         dataType: 'text',
@@ -63,23 +64,34 @@ $.ajax({
 }
 
 function parseCommands(response){ // Response is data from CS server. This processes OOB commands sent from the CS server returning the remaining response w/o oob commands
-
+        response = response.trim()
         var len  = response.length;
         var i = -1;
         while (++i < len )
         {
-                if (response.charAt(i) == ' ' || response.charAt(i) == '\t') continue; // starting whitespace
+                // if (response.charAt(i) == ' ' || response.charAt(i) == '\t') continue; // starting whitespace
                 if (response.charAt(i) == '[') break;   // we have an oob starter
                 return response;                                                // there is no oob data
         }
         if ( i == len) return response; // no starter found
-        var user = $('#txtUser').val();
+        var user = "vishnu";
 
         // walk string to find oob data and when ended return rest of string
         var start = 0;
+        var x= ['['];
         while (++i < len )
         {
-                if (response.charAt(i) == ' ' || response.charAt(i) == ']') // separation
+            if(x.length == 0){ //end oob
+                break;
+            }
+            else if(response.charAt(i) == '[' || response.charAt(i) == '{' ){
+                x.push(response.charAt(i));
+            }
+            else if(response.charAt(i) == ']' || response.charAt(i) == '}' ){
+                x.pop();
+            }
+            
+                /*if (response.charAt(i) == ' ' || response.charAt(i) == ']') // separation
                 {
                         if (start != 0) // new oob chunk
                         {
@@ -91,7 +103,7 @@ function parseCommands(response){ // Response is data from CS server. This proce
 
                                 var command = commandArr[0]; // left side is command
                                 var interval = (commandArr.length > 1) ? commandArr[1].trim() : -1; // right side is millisecond count
-                                if (interval == 0)  /* abort timeout item */
+                                if (interval == 0)  // abort timeout item 
                                 {
                                         switch (command){
                                                 case 'alarm':
@@ -128,8 +140,16 @@ function parseCommands(response){ // Response is data from CS server. This proce
                         if (response.charAt(i) == ']') return response.slice(i + 2); // return rest of string, skipping over space after ]
                 } // end if
                 else if (start == 0) start = i; // begin new text blob
+                */
         } // end while
-        return response;        // should never get here
+        oobRead = response.substring(0, i);
+       // if($('#Checkoob').is(":checked")){
+            //response = oobRead + "   |   "+ response.substring(i, response.length);
+        //}
+        //else{
+            response = response.substring(i, response.length);            
+        //}
+        return response;      
  }
 
 function update(text){ // text is  HTML code to append to the 'chat log' div. This appends the input text to the response div

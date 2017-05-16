@@ -36,7 +36,7 @@ function setDate(){
 }
 
 function cleanMail(arg){
-  while (arg.contains(".")) {
+  while (arg.includes(".")) {
     arg = arg.replace(".","");
   }
   return arg;

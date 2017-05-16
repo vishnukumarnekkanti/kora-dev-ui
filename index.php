@@ -17,20 +17,16 @@
   </head>
 <body>
   <script src='./jquery.min.js'></script>
-
+<!--
+<h4>Show OOB</h4>
+<label class="switch">
+  <input type="checkbox" id="Checkoob">
+  <div class="slider round"></div>
+</label>
+-->
   <div id="some">
 
-    <!--
 
-Follow me on
-Dribbble: https://dribbble.com/supahfunk
-Twitter: https://twitter.com/supahfunk
-Codepen: http://codepen.io/supah/
-
-It's just a concept, a fake chat to design a new daily UI for direct messaging.
-Hope you like it :)
-
--->
 
  <!--<script>
 
